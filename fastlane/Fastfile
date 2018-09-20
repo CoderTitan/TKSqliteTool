@@ -27,7 +27,7 @@ desc "Description of what the lane does"
     # 0. 需要外界传入的参数
     tagName = options[:tag]
     commitMessage = options[:commit]
-	# targetName = options[:target]
+	targetName = options[:target]
 
 
   	# 1. 将本地库更像到测试项目
@@ -78,7 +78,7 @@ desc "Description of what the lane does"
 
 	# 9. 更新索引库
 	# pod repo push XXXX xxx.podspec
-	# pod_push(path: "#{targetName}.podspec", repo: "TitanjunSpec", allow_warnings: true)
+	pod_push(path: "#{targetName}.podspec", allow_warnings: true)
 
 
 end
