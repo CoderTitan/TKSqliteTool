@@ -1,0 +1,84 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+# default_platform(:ios)
+
+# platform :ios do
+  
+# end
+
+
+desc "Description of what the lane does"
+  lane :Lane do  |options|
+
+  	# add actions here: https://docs.fastlane.tools/actions
+    # 0. 需要外界传入的参数
+    tagName = options[:tag]
+    commitMessage = options[:commit]
+	# targetName = options[:target]
+
+
+  	# 1. 将本地库更像到测试项目
+	# pod install
+	cocoapods(
+  		clean: true,
+  		# 该目录为执行Podfile未见的相对路径
+  		podfile: "./Example/Podfile"
+	)
+
+	# 2. 将本地代码加入本地仓库里
+	# git add .
+	# path为需要提交的文件的路径, 这里是所有文件
+	git_add(path: ".")
+
+	# 3. 提交修改到本地仓库
+	# git commit -m '你的修改记录'
+	# message: 提交信息
+	git_commit(path: ".", message: "#{commitMessage}")
+
+	# 4. 在push之前, 查看spec是否配置有问题
+	#  验证本地spec文件是否有误
+	# pod lib lint
+	# allow_warnings: 允许警告的存在
+	# pod_lib_lint(allow_warnings: true)
+
+	# 5. 推送master分支的代码到名称为origin的远程仓库
+	# git push origin master
+	push_to_git_remote  # 更多的信息可查看官网
+
+    # 6. 判断标签是否存在, 重复添加标签会报错
+	# if-else-end和if-end判断语句
+	if git_tag_exists(tag: tagName)
+		# UI.message: 打印信息
+    	UI.message("发现tag:#{tagName} 该标签已经存在, 即将删除该标签")
+    	remove_tag(tag:tagName)
+	end
+
+	# 7. 设置tag值
+	# git tag "0.0.1"  
+	add_git_tag(
+		tag: tagName
+	)
+
+	# 8. 上传提交tag
+	# git push --tags
+	push_git_tags
+
+	# 9. 更新索引库
+	# pod repo push XXXX xxx.podspec
+	# pod_push(path: "#{targetName}.podspec", repo: "TitanjunSpec", allow_warnings: true)
+
+
+end

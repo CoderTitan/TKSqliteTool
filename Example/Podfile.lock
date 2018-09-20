@@ -1,0 +1,16 @@
+PODS:
+  - TKSqliteTool (0.1.0)
+
+DEPENDENCIES:
+  - TKSqliteTool (from `../`)
+
+EXTERNAL SOURCES:
+  TKSqliteTool:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  TKSqliteTool: b36c3fa29fc20c42c7ef10927f233eb97179fa8c
+
+PODFILE CHECKSUM: 42035b868e0926e6e814636cd6f9ef7c86922778
+
+COCOAPODS: 1.5.3

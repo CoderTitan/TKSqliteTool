@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'TKSqliteTool_Example' do
+  pod 'TKSqliteTool', :path => '../'
+
+  target 'TKSqliteTool_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
